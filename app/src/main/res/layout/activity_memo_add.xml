@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MemoAddActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarMemoAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="메모 이름"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:hint="메모 이름 입력"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:text="메모 내용"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="메모 내용 입력"
+        android:inputType="textMultiLine" />
+</LinearLayout>
