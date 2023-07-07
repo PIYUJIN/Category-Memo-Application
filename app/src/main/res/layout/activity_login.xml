@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".PasswordActivity">
+    tools:context=".LoginActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarPassword"
+        android:id="@+id/toolbarLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#3F51B5"
@@ -16,17 +16,16 @@
         android:theme="?attr/actionBarTheme" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:text="비밀번호"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:text="비밀번호" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextPasswordLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -36,36 +35,15 @@
         android:hint="비밀번호 입력"
         android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:text="비밀번호 확인"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <EditText
-        android:id="@+id/editTextTextPasswordCheck"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:ems="10"
-        android:hint="비밀번호를 다시 입력해주세요."
-        android:inputType="textPassword" />
-
     <Button
-        android:id="@+id/buttonComplete"
+        android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:backgroundTint="#3F51B5"
-        android:text="설정 완료"
+        android:text="로그인"
         android:textSize="20dp"
         android:textStyle="bold" />
 </LinearLayout>
