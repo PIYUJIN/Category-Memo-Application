@@ -11,6 +11,7 @@ class CategoryDAO {
             // 컬럼이름과 데이터 설정 객체
             val contentValues = ContentValues()
             // 컬럼 이름, 값 지정
+            contentValues.put("idx",data.idx)
             contentValues.put("categoryData", data.category)
 
             val dbHelper = DBHelper(context)
@@ -51,7 +52,7 @@ class CategoryDAO {
 
             val dbHelper = DBHelper(context)
 
-            val cursor = dbHelper.writableDatabase.query("CategoryTable", null, null, null, null, null, null)
+            val cursor = dbHelper.writableDatabase.query("CategoryTable", null, null, null, null, null, "idx DESC")
 
             while(cursor.moveToNext()){
                 // 컬럼의 이름을 지정하여 컬럼의 순서값을 가져온다.

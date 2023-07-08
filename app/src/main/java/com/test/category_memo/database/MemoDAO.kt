@@ -60,7 +60,7 @@ class MemoDAO {
 
             val dbHelper = DBHelper(context)
 
-            val cursor = dbHelper.writableDatabase.query("MemoTable", null, null, null, null, null, null)
+            val cursor = dbHelper.writableDatabase.query("MemoTable", null, null, null, null, null, "idx DESC")
 
             while(cursor.moveToNext()){
                 // 컬럼의 이름을 지정하여 컬럼의 순서값을 가져온다.
