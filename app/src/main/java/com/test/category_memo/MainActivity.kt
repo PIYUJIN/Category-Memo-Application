@@ -45,10 +45,18 @@ class MainActivity : AppCompatActivity() {
                     builder.setNegativeButton("취소", null)
                     builder.setPositiveButton("추가", ) { dialogInterface: DialogInterface, i: Int ->
                         var inputCategory = dialogBinding.editTextInputCategory.text.toString()
-                        CategoryDAO.insertData(this@MainActivity, CategoryClass(1,inputCategory))
+                        CategoryDAO.insertData(this@MainActivity, CategoryClass(categoryList.size,inputCategory))
 
                         categoryList.clear()
                         categoryList = CategoryDAO.selectAllData(this@MainActivity)
+
+                        for (i in 0 until categoryList.size) {
+                            Log.d("lion","idx : ${categoryList[i].idx}")
+                            Log.d("lion","category : ${categoryList[i].category}")
+                        }
+
+                        // 리사이클러뷰 갱신
+                        activityMainBinding.recyclerViewCategory.adapter?.notifyDataSetChanged()
 
                     }
 

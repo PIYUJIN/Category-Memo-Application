@@ -15,7 +15,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context,"Memo.db",null,1) {
         sqlistDatabase?.execSQL(passwordsql)
 
         val categorysql = """create table CategoryTable
-            (idx integer primary key autoincrement,
+            (idx integer primary key not null,
             categoryData text not null)
         """.trimIndent()
 
