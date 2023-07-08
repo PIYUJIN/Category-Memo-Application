@@ -1,0 +1,12 @@
+package com.test.category_memo.database
+
+class MemoClass {
+
+    companion object {
+        var memoList = mutableListOf<MemoInfo>()
+    }
+}
+
+data class PasswordClass(var idx:Int, var pw:String)
+
+data class MemoInfo(var idx:Int, var category:String, var memoName:String, var memoContent:String, var date:String)
