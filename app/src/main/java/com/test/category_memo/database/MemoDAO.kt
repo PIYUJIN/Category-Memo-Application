@@ -61,7 +61,7 @@ class MemoDAO {
             val dbHelper = DBHelper(context)
             val selection = "categoryData = ?"
             val args = arrayOf("$category")
-            val cursor = dbHelper.writableDatabase.query("MemoTable", null, selection, args, null, null, null)
+            val cursor = dbHelper.writableDatabase.query("MemoTable", null, selection, args, null, null, "idx DESC")
 
             while(cursor.moveToNext()) {
                 // 컬럼의 이름을 지정하여 컬럼의 순서값을 가져온다.
