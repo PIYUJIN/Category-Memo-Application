@@ -16,20 +16,17 @@ import com.test.category_memo.databinding.ActivityMemoInfoBinding
 class MemoInfoActivity : AppCompatActivity() {
 
     lateinit var activityMemoInfoBinding: ActivityMemoInfoBinding
+
+    var position = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityMemoInfoBinding = ActivityMemoInfoBinding.inflate(layoutInflater)
         setContentView(activityMemoInfoBinding.root)
 
-        var position = intent.getIntExtra("position",0)
-        Log.d("lion","position : $position")
-
         activityMemoInfoBinding.run {
 
-            var memo = MemoDAO.selectData(this@MemoInfoActivity,position)
-            textViewMemoInfoName.text = memo.memoName
-            textViewMemoInfoContent.text = memo.memoContent
-            textViewMemoInfoDate.text = memo.date
+            position = intent.getIntExtra("position",0)
+            Log.d("lion","position : $position")
 
             toolbarMemoInfo.run {
                 title = "메모 보기"
@@ -41,6 +38,7 @@ class MemoInfoActivity : AppCompatActivity() {
                     when(it.itemId) {
                         R.id.itemEdit -> {
                             var memoAddIntent = Intent(this@MemoInfoActivity,MemoEditActivity::class.java)
+                            memoAddIntent.putExtra("position",position)
                             startActivity(memoAddIntent)
                         }
                         R.id.itemDelete -> {
@@ -65,5 +63,16 @@ class MemoInfoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        activityMemoInfoBinding.run {
+            var memo = MemoDAO.selectData(this@MemoInfoActivity, position)
+            textViewMemoInfoName.text = memo.memoName
+            textViewMemoInfoContent.text = memo.memoContent
+            textViewMemoInfoDate.text = memo.date
+        }
+
+        super.onResume()
     }
 }
