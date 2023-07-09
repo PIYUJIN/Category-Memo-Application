@@ -8,6 +8,8 @@ import android.graphics.PorterDuff
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.test.category_memo.database.MemoClass
 import com.test.category_memo.database.MemoClass.Companion.category
 import com.test.category_memo.database.MemoClass.Companion.categoryMemoList
 import com.test.category_memo.database.MemoClass.Companion.memoList
@@ -43,8 +45,22 @@ class MemoAddActivity : AppCompatActivity() {
                     var memoName = editTextMemoName.text.toString()
                     var memoContent = editTextMemoContent.text.toString()
 
-                    var memo = MemoInfo(memoList.size, category,memoName,memoContent,now)
+                    memoList.clear()
+                    MemoDAO.selectAllData(this@MemoAddActivity)
+                    var index = 0
+                    if(memoList.size!=0) {
+                        index = memoList[0].idx+1
+                    }
+                    else {
+                        index = 1
+                    }
+
+                    var memo = MemoInfo( index, category,memoName,memoContent,now)
                     MemoDAO.insertData(this@MemoAddActivity,memo)
+
+                    memoList.clear()
+                    MemoDAO.selectAllData(this@MemoAddActivity)
+
                     finish()
                     false
                 }
