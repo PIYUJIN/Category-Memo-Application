@@ -1,6 +1,7 @@
 package com.test.category_memo
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -97,6 +98,13 @@ class MainActivity : AppCompatActivity() {
 
             init {
                 textViewCategory = rowBinding.textViewCategoryName
+
+                rowBinding.root.setOnClickListener {
+                    var memoIntent = Intent(this@MainActivity,MemoMainActivity::class.java)
+                    var obj = CategoryDAO.selectData(this@MainActivity,categoryList.size-adapterPosition-1)
+                    category = obj.category
+                    startActivity(memoIntent)
+                }
 
                 rowBinding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
                     menuInflater.inflate(R.menu.category_menu, menu)
