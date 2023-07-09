@@ -26,7 +26,6 @@ class MemoInfoActivity : AppCompatActivity() {
         activityMemoInfoBinding.run {
 
             position = intent.getIntExtra("position",0)
-            Log.d("lion","position : $position")
 
             toolbarMemoInfo.run {
                 title = "메모 보기"
