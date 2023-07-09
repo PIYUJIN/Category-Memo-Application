@@ -2,6 +2,7 @@ package com.test.category_memo.database
 
 import android.content.ContentValues
 import android.content.Context
+import com.test.category_memo.database.MemoClass.Companion.categoryMemoList
 import com.test.category_memo.database.MemoClass.Companion.memoList
 
 class MemoDAO {
@@ -53,6 +54,37 @@ class MemoDAO {
             dbHelper.close()
 
             return memoInfoClass
+        }
+
+        fun selectCategoryData(context: Context, category:String):MutableList<MemoInfo>{
+
+            val dbHelper = DBHelper(context)
+            val selection = "categoryData = ?"
+            val args = arrayOf("$category")
+            val cursor = dbHelper.writableDatabase.query("MemoTable", null, selection, args, null, null, null)
+
+            while(cursor.moveToNext()) {
+                // 컬럼의 이름을 지정하여 컬럼의 순서값을 가져온다.
+                val idx1 = cursor.getColumnIndex("idx")
+                val idx2 = cursor.getColumnIndex("categoryData")
+                val idx3 = cursor.getColumnIndex("memoNameData")
+                val idx4 = cursor.getColumnIndex("memoContentData")
+                val idx5 = cursor.getColumnIndex("dateData")
+
+                // 데이터를 가져온다.
+                val idx = cursor.getInt(idx1)
+                val categoryData = cursor.getString(idx2)
+                val memoNameData = cursor.getString(idx3)
+                val memoContentData = cursor.getString(idx4)
+                val dateData = cursor.getString(idx5)
+
+                val categoryMemoClass = MemoInfo(idx, categoryData, memoNameData, memoContentData, dateData)
+                categoryMemoList.add(categoryMemoClass)
+            }
+
+            dbHelper.close()
+
+            return categoryMemoList
         }
 
         // Read All : 모든 행을 가져온다
