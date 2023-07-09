@@ -5,6 +5,7 @@ class MemoClass {
     companion object {
         var categoryList = mutableListOf<CategoryClass>()
         var memoList = mutableListOf<MemoInfo>()
+        var category = ""
     }
 }
 

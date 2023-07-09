@@ -8,17 +8,17 @@ import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.category_memo.database.CategoryClass
 import com.test.category_memo.database.CategoryDAO
+import com.test.category_memo.database.DBHelper
+import com.test.category_memo.database.MemoClass.Companion.category
 import com.test.category_memo.database.MemoClass.Companion.categoryList
-import com.test.category_memo.database.MemoClass.Companion.memoList
-import com.test.category_memo.database.MemoDAO
-import com.test.category_memo.database.MemoInfo
 import com.test.category_memo.databinding.ActivityMainBinding
-import com.test.category_memo.databinding.DialogBinding
+import com.test.category_memo.databinding.CategoryDialogBinding
 import com.test.category_memo.databinding.RowBinding
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         activityMainBinding.run {
+
+            registerForContextMenu(recyclerViewCategory)
+
             toolbarCategoryList.run {
                 title = "카테고리 목록"
                 setTitleTextColor(Color.WHITE)
@@ -37,23 +40,23 @@ class MainActivity : AppCompatActivity() {
                 inflateMenu(R.menu.add_menu)
 
                 setOnMenuItemClickListener {
-                    val dialogBinding = DialogBinding.inflate(layoutInflater)
+                    val categoryDialogBinding = CategoryDialogBinding.inflate(layoutInflater)
 
                     val builder = AlertDialog.Builder(this@MainActivity)
 
-                    builder.setView(dialogBinding.root)
+                    builder.setView(categoryDialogBinding.root)
                     builder.setNegativeButton("취소", null)
                     builder.setPositiveButton("추가", ) { dialogInterface: DialogInterface, i: Int ->
-                        var inputCategory = dialogBinding.editTextInputCategory.text.toString()
+                        var inputCategory = categoryDialogBinding.editTextInputCategory.text.toString()
                         CategoryDAO.insertData(this@MainActivity, CategoryClass(categoryList.size,inputCategory))
 
                         categoryList.clear()
                         categoryList = CategoryDAO.selectAllData(this@MainActivity)
 
-                        for (i in 0 until categoryList.size) {
-                            Log.d("lion","idx : ${categoryList[i].idx}")
-                            Log.d("lion","category : ${categoryList[i].category}")
-                        }
+//                        for (i in 0 until categoryList.size) {
+//                            Log.d("lion","idx : ${categoryList[i].idx}")
+//                            Log.d("lion","category : ${categoryList[i].category}")
+//                        }
 
                         // 리사이클러뷰 갱신
                         activityMainBinding.recyclerViewCategory.adapter?.notifyDataSetChanged()
@@ -94,6 +97,61 @@ class MainActivity : AppCompatActivity() {
 
             init {
                 textViewCategory = rowBinding.textViewCategoryName
+
+                rowBinding.root.setOnCreateContextMenuListener { menu, v, menuInfo ->
+                    menuInflater.inflate(R.menu.category_menu, menu)
+
+                    var selectData = CategoryDAO.selectData(this@MainActivity, categoryList.size-adapterPosition-1)
+                    category = selectData.category
+
+                            // '수정' 메뉴 클릭
+                    menu[0].setOnMenuItemClickListener {
+                        val categoryDialogBinding = CategoryDialogBinding.inflate(layoutInflater)
+
+                        categoryDialogBinding.editTextInputCategory.setText(category)
+
+                        val builder = AlertDialog.Builder(this@MainActivity)
+
+                        builder.setView(categoryDialogBinding.root)
+                        builder.setNegativeButton("취소", null)
+                        builder.setPositiveButton("추가", ) { dialogInterface: DialogInterface, i: Int ->
+                            var editCategory = categoryDialogBinding.editTextInputCategory.text.toString()
+                            CategoryDAO.updateData(this@MainActivity,CategoryClass(categoryList.size-adapterPosition-1,editCategory))
+
+                            categoryList.clear()
+                            categoryList = CategoryDAO.selectAllData(this@MainActivity)
+
+                            // 리사이클러뷰 갱신
+                            activityMainBinding.recyclerViewCategory.adapter?.notifyDataSetChanged()
+                        }
+
+                        builder.show()
+                        false
+                    }
+                    // '삭제' 메뉴 클릭
+                    menu[1].setOnMenuItemClickListener {
+                        CategoryDAO.deleteData(this@MainActivity,categoryList.size-adapterPosition-1)
+                        // 해당 카테고리 메모 모두 삭제
+
+                        for (idx in categoryList.size-1 downTo 0) {
+                            if(categoryList[idx].idx > categoryList.size-adapterPosition-1) {
+                                var deleteIndex = categoryList[idx].idx
+                                var obj = CategoryDAO.selectData(this@MainActivity,deleteIndex)
+                                var index = obj.idx
+                                obj.idx = index-1
+                                CategoryDAO.deleteUpdateData(this@MainActivity,deleteIndex,obj)
+                            }
+                        }
+
+                        categoryList.clear()
+                        categoryList = CategoryDAO.selectAllData(this@MainActivity)
+
+                        // 리사이클러뷰 갱신
+                        activityMainBinding.recyclerViewCategory.adapter?.notifyDataSetChanged()
+
+                        false
+                    }
+                }
             }
         }
 
