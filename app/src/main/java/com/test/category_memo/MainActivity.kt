@@ -18,6 +18,9 @@ import com.test.category_memo.database.CategoryDAO
 import com.test.category_memo.database.DBHelper
 import com.test.category_memo.database.MemoClass.Companion.category
 import com.test.category_memo.database.MemoClass.Companion.categoryList
+import com.test.category_memo.database.MemoClass.Companion.categoryMemoList
+import com.test.category_memo.database.MemoClass.Companion.memoList
+import com.test.category_memo.database.MemoDAO
 import com.test.category_memo.databinding.ActivityMainBinding
 import com.test.category_memo.databinding.CategoryDialogBinding
 import com.test.category_memo.databinding.RowBinding
@@ -53,11 +56,6 @@ class MainActivity : AppCompatActivity() {
 
                         categoryList.clear()
                         categoryList = CategoryDAO.selectAllData(this@MainActivity)
-
-//                        for (i in 0 until categoryList.size) {
-//                            Log.d("lion","idx : ${categoryList[i].idx}")
-//                            Log.d("lion","category : ${categoryList[i].category}")
-//                        }
 
                         // 리사이클러뷰 갱신
                         activityMainBinding.recyclerViewCategory.adapter?.notifyDataSetChanged()
@@ -112,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     var selectData = CategoryDAO.selectData(this@MainActivity, categoryList.size-adapterPosition-1)
                     category = selectData.category
 
-                            // '수정' 메뉴 클릭
+                    // '수정' 메뉴 클릭
                     menu[0].setOnMenuItemClickListener {
                         val categoryDialogBinding = CategoryDialogBinding.inflate(layoutInflater)
 
@@ -122,8 +120,23 @@ class MainActivity : AppCompatActivity() {
 
                         builder.setView(categoryDialogBinding.root)
                         builder.setNegativeButton("취소", null)
-                        builder.setPositiveButton("추가", ) { dialogInterface: DialogInterface, i: Int ->
+                        builder.setPositiveButton("확인", ) { dialogInterface: DialogInterface, i: Int ->
                             var editCategory = categoryDialogBinding.editTextInputCategory.text.toString()
+
+                            categoryList.clear()
+                            categoryList = CategoryDAO.selectAllData(this@MainActivity)
+
+                            memoList.clear()
+                            MemoDAO.selectCategoryData(this@MainActivity, categoryList[adapterPosition].category)
+
+                            categoryMemoList.clear()
+                            MemoDAO.selectCategoryData(this@MainActivity,categoryList[adapterPosition].category)
+
+                            for (memo in categoryMemoList) {
+                                memo.category = editCategory
+                                MemoDAO.updateData(this@MainActivity,memo)
+                            }
+
                             CategoryDAO.updateData(this@MainActivity,CategoryClass(categoryList.size-adapterPosition-1,editCategory))
 
                             categoryList.clear()
@@ -140,6 +153,13 @@ class MainActivity : AppCompatActivity() {
                     menu[1].setOnMenuItemClickListener {
                         CategoryDAO.deleteData(this@MainActivity,categoryList.size-adapterPosition-1)
                         // 해당 카테고리 메모 모두 삭제
+                        categoryMemoList.clear()
+                        MemoDAO.selectCategoryData(this@MainActivity, categoryList[adapterPosition].category)
+                        for (memo in categoryMemoList) {
+                            var deleteIndex = memo.idx
+                            MemoDAO.deleteData(this@MainActivity,deleteIndex)
+                        }
+
 
                         for (idx in categoryList.size-1 downTo 0) {
                             if(categoryList[idx].idx > categoryList.size-adapterPosition-1) {
