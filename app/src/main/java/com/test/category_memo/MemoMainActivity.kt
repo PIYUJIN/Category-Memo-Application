@@ -88,6 +88,12 @@ class MemoMainActivity : AppCompatActivity() {
 
             init {
                 textViewMemoName = memoBinding.textViewMemoName
+
+                memoBinding.root.setOnClickListener {
+                    var memoInfoIntent = Intent(this@MemoMainActivity,MemoInfoActivity::class.java)
+                    memoInfoIntent.putExtra("position", categoryMemoList[adapterPosition].idx)
+                    startActivity(memoInfoIntent)
+                }
             }
         }
 
