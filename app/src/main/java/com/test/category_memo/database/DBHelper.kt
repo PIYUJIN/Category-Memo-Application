@@ -23,7 +23,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context,"Memo.db",null,1) {
         sqlistDatabase?.execSQL(categorysql)
 
         val memosql = """create table MemoTable
-            (idx integer primary key not null,
+            (idx integer primary key autoincrement,
             categoryData text not null,
             memoNameData text not null,
             memoContentData text not null,
