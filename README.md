@@ -1,15 +1,20 @@
 # Category-Memo-Application
 This is memo and category management application with Kotlin(android programming).
 
+This application manage category and memo list.
 
 <br></br>
 ## ⌨️ commit convention
 - [Feat] 새로운 기능 구현
-- [Add] 새로운 파일 생성 시, 라이브러리 추가, 애셋(사진, 컬러) 추가
-- [Create] 파일/프로젝트 생성
+- [Add] 라이브러리 추가, 애셋(사진, 컬러) 추가
+- [Create] 새로운 파일/프로젝트 생성
 - [Fix] 코드 수정, 내부 파일 수정, 주석, ID 수정
-- [Handle] 버그, 오류 해결
-- [Delete] 쓸모없는 코드 삭제
+- [Handle] 오류 해결
+- [Delete] 불필요한 코드 삭제, 주석/log 삭제
 - [Move] 파일 위치 변경
 - [Rename] 파일 이름 변경
 - [Design] 디자인 수정 또는 구성
+
+<br></br>
+## 와이어프레임
+<img width="411" alt="image" src="https://github.com/PIYUJIN/Category-Memo-Application/assets/86800087/3e84b193-9f7b-4848-b3d6-b9b5e2570eb5">
