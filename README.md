@@ -1,7 +1,36 @@
 # Category-Memo-Application
 This is memo and category management application with Kotlin(android programming).
 
-This application manage category and memo list.
+This application manage category and memo list with SQLite database.
+
+<br>
+
+### function
+    CATEGORY
+    - 카테고리 목록
+    - 카테고리 등록
+    - 카테고리 수정
+    - 카테고리 삭제
+    MEMO
+    - 메모 목록
+    - 메모 등록
+    - 메모 수정
+    - 메모 삭제
+
+<br>
+
+### views
+    - toolBar
+      * back button
+      * option menu 
+    - recyclerView
+    - custom dialog
+    - context menu
+    - SQLite database
+
+<br></br>
+## 와이어프레임
+<img width="411" alt="image" src="https://github.com/PIYUJIN/Category-Memo-Application/assets/86800087/3e84b193-9f7b-4848-b3d6-b9b5e2570eb5">
 
 <br></br>
 ## ⌨️ commit convention
@@ -14,7 +43,3 @@ This application manage category and memo list.
 - [Move] 파일 위치 변경
 - [Rename] 파일 이름 변경
 - [Design] 디자인 수정 또는 구성
-
-<br></br>
-## 와이어프레임
-<img width="411" alt="image" src="https://github.com/PIYUJIN/Category-Memo-Application/assets/86800087/3e84b193-9f7b-4848-b3d6-b9b5e2570eb5">
