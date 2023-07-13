@@ -26,19 +26,26 @@ class PasswordActivity : AppCompatActivity() {
                 setTitleTextColor(Color.WHITE)
             }
 
-            val databasePath = this@PasswordActivity.getDatabasePath("Memo.db").path
 
-            val databaseFile = File(databasePath)
-            val databaseExists = databaseFile.exists()
+            val pref = getSharedPreferences("password", MODE_PRIVATE)
 
-            if(databaseExists) {
+            val passwordPreference = pref.getString("password","")
+
+            if(passwordPreference != "") {
                 var mainIntent = Intent(this@PasswordActivity,LoginActivity::class.java)
                 startActivity(mainIntent)
             }
             else {
                 buttonComplete.setOnClickListener {
                     if(editTextTextPassword.text.toString() == editTextTextPasswordCheck.text.toString()) {
-                        PasswordDAO.insertData(this@PasswordActivity, PasswordClass(1,editTextTextPassword.text.toString()))
+                        var password = editTextTextPassword.text.toString()
+
+                        val editor = pref.edit()
+
+                        editor.putString("password",password)
+
+                        editor.commit()
+
                         var loginIntent = Intent(this@PasswordActivity,LoginActivity::class.java)
                         startActivity(loginIntent)
                     }
