@@ -23,8 +23,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             buttonLogin.setOnClickListener {
-                var passwordClass = PasswordDAO.selectData(this@LoginActivity,1)
-                var password = passwordClass.pw
+
+                val pref = getSharedPreferences("password", MODE_PRIVATE)
+
+                var password = pref.getString("password","")
 
                 if(editTextTextPasswordLogin.text.toString() == password) {
                     var categoryIntent = Intent(this@LoginActivity,MainActivity::class.java)
